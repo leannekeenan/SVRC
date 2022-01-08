@@ -1,0 +1,2 @@
+# SVRC
+The South Village Run Club is a website that informs current and hopeful members of the club when and where events for the month of July 2022 will be.  It is a thought exercise provided by Codecademy to practice the use of grids within a website.  The site includes a mission statement, a list of events for the month, a banner informing members of weekly meet ups as well as participating restaurants to give the site a feeling of community support and recognition.  

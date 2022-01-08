@@ -1,0 +1,435 @@
+:root{
+    --nav-height: 4rem;
+
+
+    --font-size: 20px;
+
+
+    --fg-color: rgba(0, 128, 128, 1);
+    --bg-color: rgba(221, 221, 221, 1);
+    --pri: rgba(255, 255, 0, 0.80);
+    --sec: rgba(255, 160, 122, 0.85);
+    --tri: rgba(255, 127, 80, 0.80);
+
+
+    --transition: 300ms ease-out;
+    
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    /*makes a consistant display everywhere*/
+    font-family: 'Open Sans Condensed', sans-serif;
+}
+
+body{
+    padding-top: var(--nav-height);
+        /*setting the padding th is way will set the content directly under the nav bar without obstruction*/
+
+    min-height: 100vh;
+        /*the viewport height (vh) is being set to 100 to span the entire screen*/
+
+    background-color:  var(--bg-color);
+        /*references back to :root's value for background color*/
+
+    color: var(--fg-color);
+        /*references back to the :root's value for foreground color*/
+}
+
+.logo{
+    color:var(--bg-color);
+    font-family: 'Open Sans Condensed', sans-serif;
+    font-weight: 500;
+    display: inline-flex;
+    text-align: center;
+    padding-top: 5px;
+}
+
+@media (min-width: 374px) {
+    .logo{
+        font-size: calc(var(--font-size) * 1.15);
+        align-items: center;
+    }
+}
+
+
+.shoe{
+    height: var(--nav-height);
+    padding-left: 1rem;
+    padding-right: .5rem;
+    padding-bottom: 10px;
+}
+
+.nav{
+    text-align: center;
+    vertical-align: middle;
+    position: fixed;
+        /*fixed nav bar will always stick to the top of the page making it perminently visable*/
+    top: 0;
+    left: 0;
+    right: 0;
+        /*top, right, and left being set to 0 to flex across the entire page*/
+    height: var(--nav-height);
+        /*references back to the :root's value for nav height (3rem)*/
+
+    font-size: 1.5rem;
+
+    display: grid;
+    /*sets header to grid styling*/
+    grid-auto-flow: column;
+    /*causes header to automatically flow in a column direction*/
+    grid-auto-columns: max-content;
+    /*each automatically created column is going to be sized to fit the content, and will not wrap if there is text inside*/
+
+    border-bottom: 1px solid var(--fg-color);
+    /*sets a 1px blue border on the bottom*/
+
+    box-shadow: -2px 2px 8px 0px var(--tri);
+    /*makes a shadow behind the navbar slightly shifted to the left, 2px to the bottom, blurred 8p
+    x, and no spread*/
+
+    background-color: var(--fg-color);
+
+    justify-content: space-between;
+    /*Aligns flex items along the main axis of the current line of the flex container.*/
+    align-items: center;
+    /*Aligns flex items along the cross axis of the current line of the flex container.*/
+    z-index: 10;
+}
+
+.nav ul{
+    display: grid;
+    grid-auto-flow: row;
+    grid-auto-columns: 1fr;
+    grid-auto-rows: max-content;
+    gap: 0.5rem;
+    padding: 0;
+    list-style-type: none;
+    height: 100vh;
+}
+
+.nav ul li{
+    display: grid;
+    padding: 0.5rem;
+    
+}
+
+.nav a{
+    display: flex;
+    padding: 0.5rem 1.5rem;
+    border-radius: 0.25rem;
+    text-decoration: none; 
+    transition: background-color var(--transition);
+    /*the time it will take for the color to change*/
+    color: var(--bg-color);
+    background-color: var(--fg-color);
+    text-transform: capitalize;
+    font-size: 1rem; 
+}
+
+.nav a:hover{
+    background: var(--sec);
+    color: var(--bg-color);
+}
+
+#nav-toggle{
+    display: none;
+}
+
+#nav-toggle-label{
+    display: flex;
+    flex-direction: column;
+    /*positions bars underneath each other*/
+    cursor: pointer;
+    --size: calc(var(--nav-height) / 3);
+    /*defines a size variable.  this will be a 1/3 of the nav height*/
+    --bar-height: 2px;
+    /*defines the bar height of the checkbox toggle in the HTML*/
+    justify-content: space-between;
+    /*all items within the space will use all of the available space within the object (3rem) between the bars to seperate*/
+    flex-basis: auto;
+    /*sets the initial size of a flex item*/
+    width: var(--size);
+    height: var(--size);
+    margin-right: calc(var(--nav-height) / 2);
+    /*pushes to the left by .93 nav-height */
+    z-index: 2;
+}
+ /*This will put a label inside of the circle.  if the label is clicked, the check boxes change and will trigger setting another clip-path on the navigation tag.  The label itself will be a flex container and flexed into column mode*/
+
+ #nav-toggle-label .bar{
+     display: inline-block;
+     /*In combination with 'float' and 'position', display determines the type of box or boxes that are generated for an element.  Inline block can display an element while respecting the margin and padding of the element.  inline-block does not add a line break so elements can sit next to each other rather than just underneath*/  
+     height: var(--bar-height);
+     width: 100%;
+     background-color: var(--sec);
+     transition: transform var(--transition);
+    
+}
+
+#nav-toggle:checked + #nav-toggle-label .bar:nth-child(1){
+    transform:
+        translate(0, calc(var(--size) / 2 - var(--bar-height) / 2))
+        rotate(225deg);
+}
+
+#nav-toggle:checked + #nav-toggle-label .bar:nth-child(2){
+    transform: scaleX(0);
+}
+
+#nav-toggle:checked + #nav-toggle-label .bar:nth-child(3){
+    transform:
+    translate(0, calc(-1 * var(--size) / 2 + var(--bar-height) / 2))
+    rotate(135deg);
+}
+
+#nav-toggle:checked + * + nav{
+    clip-path: circle(125vmax at 100% 0%);
+    color: var(--bg-color);
+    background-color: var(--fg-color);
+    margin-top: var(--nav-height);
+    
+}
+
+.nav nav{
+   position: fixed; 
+   top: 0;
+   bottom: 0;
+   right: 0;
+   width: 374px;
+   padding-top: var(--nav-height);
+   opacity: 0.9;
+   clip-path: circle(
+       calc(var(--nav-height) / 3)
+       /*radius of the circle is being made relative to the navigation height of the navbar which is 3rem, therefore the radius is (3rem / 3)*/
+       at
+       calc(100% - var(--nav-height) / .8)
+       /*center coordinates.  this places the object on the x-axis to the very right, but slightly shifted to the left .8 of the width of the navigation (3rem)*/
+       calc(0% + var(--nav-height) / 2)
+       /*this will identify the y-axis coordinate.  it will be placed at the top with an added 1.5rem space at the top (the base rem for the nav-height is 3 and by dividing the nav-height by 2, the gap becomes 1.5rem) */
+   );
+   transition: clip-path var(--transition-long);
+   /*Clip-path: Specifies a clipping path where everything inside the path is visible and everything outside is clipped out.  a clip path is provided in an instance where a checkbox is used to create a nav drop down menu with a unique shape for the icon by cutting the contour of a page element.  in this instance we are creating a circle.  the checkbox must have a default position of being unchecked for this to work properly. */
+}
+
+.home{
+    width: 100%;
+    display: flex;
+    position: relative;
+}
+
+.home-image{
+    position: relative;
+    background-repeat: no-repeat;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 70vh;
+    object-fit: cover;
+}
+
+.meet-up{
+    display: flex;
+    position: absolute;
+    top: 25%;
+    left: 65%;
+    font-size: calc(var(--font-size) * 3);
+    color: var(--pri);
+}
+
+@media (max-width: 1050px) {
+    .meet-up{
+        font-size: calc(var(--font-size) * 2);
+    }
+}
+
+@media (max-width: 680px) {
+    .meet-up{
+        font-size: calc(var(--font-size) * 1.75);
+    }
+}
+
+@media (max-width: 374px) {
+    .meet-up{
+        font-size: calc(var(--font-size) * 1.5);
+    }
+}
+
+.mission-statement{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: calc(var(--font-size) * 1.75);
+    padding: calc(var(--nav-height) / 2) ;
+    padding-bottom: 0;
+}
+
+@media (max-width: 1050px) {
+    .mission-statement{
+        font-size: calc(var(--font-size) * 1.50);
+    } 
+}
+
+@media (max-width: 768px) {
+    .mission-statement{
+        font-size: calc(var(--font-size) * 1.25);
+    }
+}
+
+@media (max-width: 480px) {
+    .mission-statement{
+        font-size: calc(var(--font-size) * 1);
+    }
+}
+
+
+.city-shoes{
+    display: block;
+    margin: auto;
+}
+
+.events-headline{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    color: var(--pri);
+    background-color: var(--fg-color);
+    margin: 2% 7.5%;
+    font-size: calc(var(--font-size) * 1.5);
+    margin-top: var(--nav-height);
+}
+
+.event-grid {
+    /* parent element */
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin: 2%;
+    justify-items: center;    
+}
+
+@media (max-width:1050px) {
+    .event-grid{
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .event-grid{
+        grid-template-columns: repeat(1, 1fr);
+    }
+}
+
+.event {
+    /* child element */
+    text-align: center;
+    background-color: rgba(255, 255, 0, 0.10);
+    box-shadow: -2px 2px 8px 0px var(--tri);
+    padding: 5% 10%;
+    z-index: 1;
+}
+
+.event-img{
+    width: 250px;
+    border: 4px solid rgba(255, 127, 80, 0.30);
+}
+
+.event .event-headline{
+    text-decoration: none;
+    color: var(--fg-color);
+}
+
+.we-meet{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    padding: var(--nav-height);
+    margin: 3% 0;
+    align-items: center;
+    text-align: center;
+    height: auto;
+    width: 100%;
+    background: var(--sec);
+}
+
+
+
+.restaurant-grid{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    margin: 5% 10%;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+   }
+@media (max-width:1200px) {
+    .restaurant-grid{
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .restaurant-grid{
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 480px) {
+    .restaurant-grid{
+        grid-template-columns: repeat(1, 1fr);
+    }
+}
+.restaurant-img{
+    border-radius: 15px;
+    width: 275px;
+}
+
+@media (max-width:1050px) {
+    .restaurant-img{
+        width: 225px;
+    }
+}
+
+@media (max-width: 480px) {
+    .restaurant-img{
+        width: 150px;
+    }
+}
+
+.partners-headline{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+
+    color: var(--fg-color);
+    margin-left: 10%;
+    font-size: calc(var(--font-size) * 1.5);
+    margin-top: var(--nav-height);
+}
+
+footer{
+    background-color:var(--fg-color);
+    color: var(--sec);
+    display: grid;
+    grid-auto-flow: column;
+    justify-content: space-between;
+    padding: 10px 30px;
+}
+
+.footer-copyright{
+    color: var(--sec);
+    font-size: 1.5rem;
+    align-content: center;
+    display: block;
+    margin: auto;
+}
+
+.footer-logo a{
+    text-decoration: none;
+    color: var(--sec);
+}
